@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  microtransactionsmgtapi:
+    container_name: microtransactionsmgtapi
+    image: petprojects/micro-transactions-mgt-api:dev
+    build:
+      context: ./src/API
+      dockerfile: Dockerfile
+      args:
+        source: ./build
+    ports:
+      - "5000:80"
