@@ -1,11 +1,11 @@
 version: '2'
 
 services:
-  microtransactionsmgtapi:
-    container_name: microtransactionsmgtapi
-    image: petprojects/micro-transactions-mgt-api:dev
+  microtransactionscommandhandler:
+    container_name: microtransactionscommandhandler
+    image: petprojects/micro-transactions-command-handler:dev
     build:
-      context: ./src/API
+      context: ./src/Mts.CommandHandler
       dockerfile: Dockerfile
       args:
         source: ./build
