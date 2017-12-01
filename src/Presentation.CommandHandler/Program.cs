@@ -1,7 +1,6 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication
 {
     using System;
-    using System.ComponentModel;
     using System.Threading;
     using System.Threading.Tasks;
     using Configurations;
@@ -19,7 +18,7 @@
             var configuration = new Bootstrapper()
                                 .BootstrapContainer();
 
-            using (var parentServiceProvider =  configuration.ServiceCollection.BuildServiceProvider())
+            using (var parentServiceProvider = configuration.ServiceCollection.BuildServiceProvider())
             {
                 Program.Run(parentServiceProvider);
             }

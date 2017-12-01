@@ -15,6 +15,14 @@
 
         public IServiceCollection ServiceCollection { get; private set; }
 
+        public Bootstrapper BootstrapContainer()
+        {
+            this.ServiceCollection = new ServiceCollection();
+
+            // Setup Services, repositories, Producers, consumers, etc
+            return this;
+        }
+
         private void SetupConfiguration()
         {
             var configurationBuilder = new ConfigurationBuilder()
@@ -23,15 +31,6 @@
                 .AddEnvironmentVariables("MTS_APP_SETTINGS");
 
             this.Configuration = configurationBuilder.Build();
-        }
-
-        public Bootstrapper BootstrapContainer()
-        {
-            this.ServiceCollection = new ServiceCollection();
-            
-            // Setup Services, repositories, Producers, consumers, etc
-
-            return this;
         }
     }
 }
