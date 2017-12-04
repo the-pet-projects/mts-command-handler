@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Deploy", "2 - Deploy", 
 		Jenkinsfile = Jenkinsfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.ConsoleApplication", "src\Presentation.CommandHandler\Presentation.ConsoleApplication.csproj", "{040E6010-BBE7-4500-8AA6-DC7F93EBA0EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.ConsoleApplication", "src\Presentation.CommandHandler\Presentation.ConsoleApplication.csproj", "{040E6010-BBE7-4500-8AA6-DC7F93EBA0EC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.2 - Persistence", "1.2 - Persistence", "{FAD455A7-4F79-4DA0-B297-BD51F660CB01}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.3 - Persistence", "1.3 - Persistence", "{FAD455A7-4F79-4DA0-B297-BD51F660CB01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data.Repository.CassandraDb", "src\Data.Repository.CassandraDb\Data.Repository.CassandraDb.csproj", "{E6AE245D-4E3D-4782-AB89-79386F5C821F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data.Repository.CassandraDb", "src\Data.Repository.CassandraDb\Data.Repository.CassandraDb.csproj", "{E6AE245D-4E3D-4782-AB89-79386F5C821F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.2 - Application", "1.2 - Application", "{01AAE96E-B17D-4091-BE89-62877EB4732D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,8 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.Configurations
 {
     using System.IO;
+    using Framework.Consul;
+    using Framework.Consul.Store;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +21,17 @@
         {
             this.ServiceCollection = new ServiceCollection();
 
-            // Setup Services, repositories, Producers, consumers, etc
+            var sp = this.ServiceCollection.BuildServiceProvider();
+
+            this.ServiceCollection.AddPetProjectConsulServices(this.Configuration, true);
+
+            var configStore = sp.GetRequiredService<IStringKeyValueStore>();
+
+            this.ServiceCollection
+                .LoadConsumersConfigurations(configStore)
+                .LoadProducersConfigurations(configStore)
+                .LoadLoggingConfiguration(configStore);
+
             return this;
         }
 

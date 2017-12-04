@@ -6,4 +6,8 @@
     <RootNamespace>PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CassandraCSharpDriver" Version="3.4.0" />
+  </ItemGroup>
+
 </Project>

@@ -12,12 +12,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.0" />
     <PackageReference Include="PetProjects.Framework.Consul" Version="0.9.17330.3" />
+    <PackageReference Include="PetProjects.Framework.Kafka" Version="0.1.17338.1" />
     <PackageReference Include="PetProjects.Framework.Logging.Consumer.ElasticSearch" Version="0.9.17335.1" />
+    <PackageReference Include="PetProjects.Framework.Logging.Contracts" Version="0.9.17335.1" />
     <PackageReference Include="PetProjects.Framework.Logging.Producer" Version="0.9.17335.1" />
+    <PackageReference Include="PetProjects.MicroTransactions.Commands" Version="0.1.17338.3" />
+    <PackageReference Include="PetProjects.MicroTransactions.Events" Version="0.1.17338.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Consumer\" />
     <Folder Include="Producer\" />
   </ItemGroup>
 

@@ -16,7 +16,7 @@
         {
             // Init Bootstrapper with appsettings
             var configuration = new Bootstrapper()
-                                .BootstrapContainer();
+                                    .BootstrapContainer();
 
             using (var parentServiceProvider = configuration.ServiceCollection.BuildServiceProvider())
             {
