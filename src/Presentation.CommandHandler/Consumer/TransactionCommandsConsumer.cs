@@ -19,6 +19,7 @@
             this.logger = logger;
             this.ConsumerHandlerFor<CreateTransaction>(this.HandleCreateCommand);
 
+            // TODO: Need to check this later! Not tested :S 
             this.background = Task.Factory.StartNew(
                 () =>
                 {
@@ -30,8 +31,7 @@
                     }
                     else
                     {
-                        this.logger.LogCritical("{0} failed to start. Configurations: {config}",
-                            nameof(TransactionsConsumer), configuration);
+                        this.logger.LogCritical("{0} failed to start. Configurations: {config}", nameof(TransactionsConsumer), configuration);
                     }
                 },
                 TaskCreationOptions.LongRunning);

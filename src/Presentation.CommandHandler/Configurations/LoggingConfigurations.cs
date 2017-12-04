@@ -8,10 +8,9 @@
 
     public static class LoggingConfigurations
     {
-        public static IServiceCollection LoadLoggingConfiguration(this IServiceCollection serviceCollection,
-            IStringKeyValueStore configStore)
+        public static IServiceCollection LoadLoggingConfiguration(this IServiceCollection serviceCollection, IStringKeyValueStore configStore)
         {
-            var kafkaConfig = new Framework.Logging.Producer.KafkaConfiguration
+            var kafkaConfig = new KafkaConfiguration
             {
                 Brokers = configStore.GetAndConvertValue<string>("kafka/brokers").Split(','),
                 Topic = configStore.GetAndConvertValue<string>("kafka/logging/topic")
