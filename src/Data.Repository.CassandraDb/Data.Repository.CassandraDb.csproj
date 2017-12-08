@@ -10,4 +10,9 @@
     <PackageReference Include="CassandraCSharpDriver" Version="3.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Model\Domain.Model.csproj" />
+    <ProjectReference Include="..\Infrasctructure.CrossCutting\Infrasctructure.CrossCutting.csproj" />
+  </ItemGroup>
+
 </Project>

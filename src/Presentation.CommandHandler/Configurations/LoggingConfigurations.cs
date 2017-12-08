@@ -18,12 +18,12 @@
 
             var sinkConfig = new PeriodicSinkConfiguration
             {
-                BatchSizeLimit = configStore.GetAndConvertValue<int>("mts-command-handler/logging/batchSizeLimit"),
-                Period = TimeSpan.FromMilliseconds(configStore.GetAndConvertValue<int>("mts-command-handler/logging/periodMs"))
+                BatchSizeLimit = configStore.GetAndConvertValue<int>("logging/batchSizeLimit"),
+                Period = TimeSpan.FromMilliseconds(configStore.GetAndConvertValue<int>("logging/periodMs"))
             };
 
-            var logLevel = configStore.GetAndConvertValue<LogEventLevel>("mts-command-handler/logging/logLevel");
-            var logType = configStore.GetAndConvertValue<string>("mts-command-handler/logging/logType");
+            var logLevel = configStore.GetAndConvertValue<LogEventLevel>("logging/logLevel");
+            var logType = configStore.GetAndConvertValue<string>("logging/logType");
 
             serviceCollection.AddLogging(builder => builder.AddPetProjectLogging(logLevel, sinkConfig, kafkaConfig, logType, true));
 

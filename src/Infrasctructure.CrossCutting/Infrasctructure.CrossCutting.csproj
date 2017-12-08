@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting</AssemblyName>
+    <RootNamespace>PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting</RootNamespace>
+  </PropertyGroup>
+
+</Project>

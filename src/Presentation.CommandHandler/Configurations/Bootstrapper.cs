@@ -5,6 +5,8 @@
     using Framework.Consul.Store;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Logging.Abstractions;
 
     public class Bootstrapper
     {
@@ -24,8 +26,14 @@
             var sp = this.ServiceCollection.BuildServiceProvider();
 
             this.ServiceCollection.AddPetProjectConsulServices(this.Configuration, true);
+            this.ServiceCollection.AddSingleton<ILogger>(NullLogger.Instance);
 
-            var configStore = sp.GetRequiredService<IStringKeyValueStore>();
+            IStringKeyValueStore configStore;
+
+            using (var tmpServiceProvider = this.ServiceCollection.BuildServiceProvider())
+            {
+                configStore = sp.GetRequiredService<IStringKeyValueStore>();
+            }
 
             this.ServiceCollection
                 .LoadConsumersConfigurations(configStore)
