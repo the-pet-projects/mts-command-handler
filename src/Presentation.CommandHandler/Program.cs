@@ -4,11 +4,8 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Configurations;
-    using Framework.Kafka.Consumer;
-    using Framework.Logging.Consumer.ElasticSearch;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using MicroTransactions.Commands.Transactions.V1;
 
     internal class Program
     {
@@ -32,11 +29,9 @@
 
             logger.LogCritical("Starting Mts CommandHandler...");
 
-            scopedProvider.StartPetProjectElasticLogConsumer();
-
-            using (var consumer = scopedProvider.GetRequiredService<IConsumer<TransactionCommand>>())
-            {
-                consumer.StartConsuming();
+            //using (var consumer = scopedProvider.GetRequiredService<IConsumer<TransactionCommand>>())
+            //{
+            //    consumer.StartConsuming();
 
                 Console.CancelKeyPress += (sender, eArgs) =>
                 {
@@ -46,10 +41,10 @@
 
                 Program.QuitEvent.WaitOne();
 
-                logger.LogWarning("Received notification to exit. Stopping and disposing consumer...");
+                //logger.LogWarning("Received notification to exit. Stopping and disposing consumer...");
 
-                consumer.Dispose();
-            }
+                //consumer.Dispose();
+            //}
 
             logger.LogCritical("Mts.CommandHandler Ended...");
 

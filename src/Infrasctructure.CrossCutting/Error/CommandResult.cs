@@ -3,8 +3,15 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class CommandResult : IResult
+    public class CommandResult<TData> : IResult<TData>
     {
+        public CommandResult(TData data)
+        {
+            this.Data = data;
+        }
+
+        public TData Data { get; }
+
         public bool Success => this.Errors.Any();
 
         public ICollection<Error> Errors { get; } = new List<Error>();

@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="PetProjects.Framework.Cqrs" Version="1.0.17337.3" />
+    <PackageReference Include="PetProjects.Framework.Kafka" Version="0.1.17342.1" />
+    <PackageReference Include="PetProjects.Framework.Logging.Contracts" Version="0.9.17335.1" />
+    <PackageReference Include="PetProjects.MicroTransactions.Events" Version="0.1.17342.1" />
   </ItemGroup>
 
   <ItemGroup>

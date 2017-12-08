@@ -10,7 +10,7 @@
 
         public Guid ItemId { get; set; }
 
-        public double Quantity { get; set; }
+        public int Quantity { get; set; }
 
         public long Timestamp { get; set; }
     }

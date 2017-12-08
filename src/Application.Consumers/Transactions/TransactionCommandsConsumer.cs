@@ -1,14 +1,17 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Application.Consumers.Transactions
 {
     using System.Threading.Tasks;
-    using CommandHandlers.Transaction;
-    using Framework.Cqrs.Mediator;
-    using Framework.Kafka.Configurations.Consumer;
-    using Framework.Kafka.Consumer;
-    using Framework.Kafka.Contracts.Topics;
-    using Infrasctructure.CrossCutting.Error;
+
     using Microsoft.Extensions.Logging;
-    using MicroTransactions.Commands.Transactions.V1;
+
+    using PetProjects.Framework.Cqrs.Mediator;
+    using PetProjects.Framework.Kafka.Configurations.Consumer;
+    using PetProjects.Framework.Kafka.Consumer;
+    using PetProjects.Framework.Kafka.Contracts.Topics;
+    using PetProjects.MicroTransactions.Commands.Transactions.V1;
+    using PetProjects.Mts.CommandHandler.Application.CommandHandlers.Transaction;
+    using PetProjects.Mts.CommandHandler.Domain.Model;
+    using PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting.Error;
 
     public class TransactionsConsumer : Consumer<TransactionCommand>
     {
@@ -27,11 +30,11 @@
 
         private async Task HandleCreateCommand(CreateTransaction cmd)
         {
-            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult>(new CreateTransactionCommand());
+            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>(new CreateTransactionCommand());
 
             if (result.Success)
             {
-               await this.CommitAsync();
+                await this.CommitAsync();
             }
             else
             {

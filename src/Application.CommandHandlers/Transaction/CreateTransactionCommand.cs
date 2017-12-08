@@ -1,10 +1,12 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Application.CommandHandlers.Transaction
 {
     using System;
-    using Framework.Cqrs.Commands;
-    using Infrasctructure.CrossCutting.Error;
 
-    public class CreateTransactionCommand : ICommand<CommandResult>
+    using PetProjects.Framework.Cqrs.Commands;
+    using PetProjects.Mts.CommandHandler.Domain.Model;
+    using PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting.Error;
+
+    public class CreateTransactionCommand : ICommand<CommandResult<MicroTransaction>>
     {
         public CreateTransactionCommand()
         {

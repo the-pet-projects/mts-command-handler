@@ -1,7 +1,8 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Transactions
 {
     using Cassandra.Mapping;
-    using Domain.Model;
+
+    using PetProjects.Mts.CommandHandler.Domain.Model;
 
     public class MicroTransactionMappings : Mappings
     {

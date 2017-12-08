@@ -1,9 +1,11 @@
-﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.Configurations
+﻿namespace PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection
 {
     using System;
-    using Framework.Consul.Store;
-    using Framework.Logging.Producer;
     using Microsoft.Extensions.DependencyInjection;
+
+    using PetProjects.Framework.Consul.Store;
+    using PetProjects.Framework.Logging.Producer;
+
     using Serilog.Events;
 
     public static class LoggingConfigurations

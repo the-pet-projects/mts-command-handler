@@ -1,4 +1,4 @@
-﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.Configurations
+﻿namespace PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection
 {
     using System;
 

@@ -1,12 +1,15 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.Configurations
 {
     using System.IO;
-    using Framework.Consul;
-    using Framework.Consul.Store;
+
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
+
+    using PetProjects.Framework.Consul;
+    using PetProjects.Framework.Consul.Store;
+    using PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection;
 
     public class Bootstrapper
     {
@@ -23,8 +26,6 @@
         {
             this.ServiceCollection = new ServiceCollection();
 
-            var sp = this.ServiceCollection.BuildServiceProvider();
-
             this.ServiceCollection.AddPetProjectConsulServices(this.Configuration, true);
             this.ServiceCollection.AddSingleton<ILogger>(NullLogger.Instance);
 
@@ -32,7 +33,7 @@
 
             using (var tmpServiceProvider = this.ServiceCollection.BuildServiceProvider())
             {
-                configStore = sp.GetRequiredService<IStringKeyValueStore>();
+                configStore = tmpServiceProvider.GetRequiredService<IStringKeyValueStore>();
             }
 
             this.ServiceCollection

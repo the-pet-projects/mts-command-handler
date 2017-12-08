@@ -1,12 +1,12 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Connection
 {
-    using System.Transactions;
     using Cassandra;
     using Cassandra.Data.Linq;
     using Cassandra.Mapping;
-    using Configuration;
-    using Domain.Model;
-    using Transactions;
+
+    using PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Configuration;
+    using PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Transactions;
+    using PetProjects.Mts.CommandHandler.Domain.Model;
 
     public static class ConnectionBuilder
     {

@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
 
-    public interface IResult
+    public interface IResult<out TData>
     {
+        TData Data { get; }
+
         bool Success { get; }
 
         ICollection<Error> Errors { get; }
