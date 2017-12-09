@@ -29,22 +29,19 @@
 
             logger.LogCritical("Starting Mts CommandHandler...");
 
-            //using (var consumer = scopedProvider.GetRequiredService<IConsumer<TransactionCommand>>())
-            //{
-            //    consumer.StartConsuming();
 
-                Console.CancelKeyPress += (sender, eArgs) =>
-                {
-                    Program.QuitEvent.Set();
-                    eArgs.Cancel = true;
-                };
+            for (int i = 0; i < 5; i++)
+            {
+                logger.LogInformation("Test new log {times}", i);
+            }
 
-                Program.QuitEvent.WaitOne();
+            Console.CancelKeyPress += (sender, eArgs) =>
+            {
+                Program.QuitEvent.Set();
+                eArgs.Cancel = true;
+            };
 
-                //logger.LogWarning("Received notification to exit. Stopping and disposing consumer...");
-
-                //consumer.Dispose();
-            //}
+            Program.QuitEvent.WaitOne();
 
             logger.LogCritical("Mts.CommandHandler Ended...");
 
