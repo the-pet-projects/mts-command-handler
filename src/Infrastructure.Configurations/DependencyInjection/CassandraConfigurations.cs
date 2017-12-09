@@ -17,7 +17,7 @@
         {
             serviceCollection.AddTransient<CassandraSettings>(serviceProvider => new CassandraSettings
             {
-                TransactionsWriteConsistencyLevel = (ConsistencyLevel)Enum.Parse(typeof(ConsistencyLevel), configStore.GetAndConvertValue<string>("cassandra/consistencyLevel/read"))
+                TransactionsWriteConsistencyLevel = (ConsistencyLevel)Enum.Parse(typeof(ConsistencyLevel), configStore.GetAndConvertValue<string>("cassandra/consistencyLevel/write"))
             });
 
             serviceCollection.AddSingleton<CassandraConfiguration>(serviceProvider => new CassandraConfiguration

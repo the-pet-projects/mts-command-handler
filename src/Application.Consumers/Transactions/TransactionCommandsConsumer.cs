@@ -13,12 +13,12 @@
     using PetProjects.Mts.CommandHandler.Domain.Model;
     using PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting.Error;
 
-    public class TransactionsConsumer : Consumer<TransactionCommand>
+    public class TransactionsCommandsConsumer: Consumer<TransactionCommand>
     {
         private readonly ISimpleMediator mediator;
-        private readonly ILogger logger;
+        private readonly ILogger<TransactionsCommandsConsumer> logger;
 
-        protected TransactionsConsumer(ISimpleMediator mediator, ILogger logger, ITopic<TransactionCommand> topic, IConsumerConfiguration configuration)
+        protected TransactionsCommandsConsumer(ISimpleMediator mediator, ILogger<TransactionsCommandsConsumer> logger, ITopic<TransactionCommand> topic, IConsumerConfiguration configuration)
             : base(topic, configuration, logger)
         {
             this.mediator = mediator;

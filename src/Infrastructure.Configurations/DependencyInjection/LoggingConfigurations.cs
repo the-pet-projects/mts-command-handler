@@ -1,7 +1,10 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection
 {
     using System;
+
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
+    using Microsoft.Extensions.Logging;
 
     using PetProjects.Framework.Consul.Store;
     using PetProjects.Framework.Logging.Producer;
@@ -14,8 +17,8 @@
         {
             var kafkaConfig = new KafkaConfiguration
             {
-                Brokers = configStore.GetAndConvertValue<string>("kafka/brokers").Split(','),
-                Topic = configStore.GetAndConvertValue<string>("kafka/logging/topic")
+                Brokers = configStore.GetAndConvertValue<string>("logging/kafka/brokersList").Split(','),
+                Topic = configStore.GetAndConvertValue<string>("logging/kafka/topic")
             };
 
             var sinkConfig = new PeriodicSinkConfiguration
@@ -28,6 +31,7 @@
             var logType = configStore.GetAndConvertValue<string>("logging/logType");
 
             serviceCollection.AddLogging(builder => builder.AddPetProjectLogging(logLevel, sinkConfig, kafkaConfig, logType, true));
+            serviceCollection.TryAddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("No category"));
 
             return serviceCollection;
         }

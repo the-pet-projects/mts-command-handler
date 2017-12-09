@@ -36,10 +36,11 @@
                 configStore = tmpServiceProvider.GetRequiredService<IStringKeyValueStore>();
             }
 
-            this.ServiceCollection
-                .LoadConsumersConfigurations(configStore)
-                .LoadProducersConfigurations(configStore)
-                .LoadLoggingConfiguration(configStore);
+            this.ServiceCollection.LoadConsumersConfigurations(configStore);
+            this.ServiceCollection.LoadProducersConfigurations(configStore);
+            this.ServiceCollection.LoadLoggingConfiguration(configStore);
+            this.ServiceCollection.LoadCommandHandlersConfigurations();
+            this.ServiceCollection.LoadRepositoriesConfigurations();
 
             return this;
         }
@@ -48,7 +49,7 @@
         {
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+                .AddJsonFile("Configurations/appsettings.json", optional: false, reloadOnChange: false)
                 .AddEnvironmentVariables("MTS_APP_SETTINGS");
 
             this.Configuration = configurationBuilder.Build();

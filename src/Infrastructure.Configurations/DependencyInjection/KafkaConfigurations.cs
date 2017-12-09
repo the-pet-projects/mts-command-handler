@@ -34,14 +34,14 @@
 
             serviceCollection.AddSingleton<ITopic<TransactionCommand>, TransactionCommandsTopic>();
 
-            serviceCollection.AddTransient<IConsumer<TransactionCommand>, TransactionsConsumer>();
+            serviceCollection.AddTransient<IConsumer<TransactionCommand>, TransactionsCommandsConsumer>();
 
             return serviceCollection;
         }
 
         public static IServiceCollection LoadProducersConfigurations(this IServiceCollection serviceCollection, IStringKeyValueStore configStore)
         {
-            var brokers = configStore.GetAndConvertValue<string>("kafka/brokers").Split(',');
+            var brokers = configStore.GetAndConvertValue<string>("kafka/brokersList").Split(',');
             var clientId = configStore.GetAndConvertValue<string>("kafka/producer/clientId");
 
             var producerConfiguration = new ProducerConfiguration(clientId, brokers);

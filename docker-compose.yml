@@ -9,5 +9,3 @@ services:
       dockerfile: Dockerfile
       args:
         source: ./build
-    ports:
-      - "5000:80"
