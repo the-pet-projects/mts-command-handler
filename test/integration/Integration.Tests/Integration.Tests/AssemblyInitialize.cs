@@ -15,9 +15,9 @@
         [AssemblyCleanup]
         public static void AssemblyCleanup()
         {
-            foreach (var transactionId in Utils.GetTransactionsToCleanup())
+            foreach (var userId in Utils.GetUsersToCleanup())
             {
-                CassandraConnection.Session.Execute(new SimpleStatement("DELETE FROM transactions WHERE transaction_id = ?", transactionId));
+                CassandraConnection.Session.Execute(new SimpleStatement("DELETE FROM transactions WHERE user_id = ?", userId));
             }
         }
     }
