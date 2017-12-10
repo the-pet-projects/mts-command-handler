@@ -31,14 +31,7 @@
 
         private async Task<bool> HandleCreateCommandAsync(Contract.CreateTransactionCommand command)
         {
-            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>(new CreateTransactionCommand
-            {
-                UserId = command.UserId,
-                Quantity = command.Quantity,
-                ItemId = command.ItemId,
-                Timestamp = command.Timestamp.UnixTimeEpochTimestamp,
-                TransactionId = command.TransactionId
-            });
+            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>(command.ToModelCommand());
 
             if (!result.Success)
             {

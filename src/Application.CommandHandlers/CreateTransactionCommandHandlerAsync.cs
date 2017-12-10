@@ -5,7 +5,6 @@
     using MicroTransactions.Events.Transactions.V1;
 
     using PetProjects.Framework.Cqrs.Commands;
-    using PetProjects.Framework.Kafka.Contracts.Utils;
     using PetProjects.Framework.Kafka.Producer;
     using PetProjects.Mts.CommandHandler.Application.CommandHandlers.Transaction;
     using PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Transactions;
@@ -29,14 +28,7 @@
         {
             this.logger.LogTrace("Entered {commandHandler}", nameof(CreateTransactionCommandHandlerAsync));
 
-            var result = await this.transactionsRepository.InsertAsync(new MicroTransaction
-            {
-                UserId = command.UserId,
-                Quantity = command.Quantity,
-                ItemId = command.ItemId,
-                Timestamp = command.Timestamp,
-                Id = command.TransactionId
-            });
+            var result = await this.transactionsRepository.InsertAsync(command.ToModel());
 
             if (!result.Success)
             {
@@ -46,15 +38,7 @@
 
             this.logger.LogTrace("Before Producing {eventType}", nameof(TransactionCreatedEvent));
 
-            var report = await this.producer.ProduceAsync(
-                new TransactionCreatedEvent
-                {
-                    TransactionId = result.Data.Id,
-                    UserId = result.Data.UserId,
-                    ItemId = result.Data.ItemId,
-                    Quantity = result.Data.Quantity,
-                    Timestamp = new Timestamp()
-                });
+            var report = await this.producer.ProduceAsync(result.Data.ToEvent());
 
             this.logger.LogTrace("After Producing {eventType}", nameof(TransactionCreatedEvent));
 
