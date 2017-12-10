@@ -6,4 +6,4 @@ WORKDIR /app
 
 COPY ${source:-/build} .
 
-ENTRYPOINT ["dotnet", "PetProjects.Mts.CommandHandler.dll"]
+ENTRYPOINT ["dotnet", "PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.dll"]
