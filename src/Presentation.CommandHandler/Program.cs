@@ -4,8 +4,10 @@
     using System.Threading;
     using System.Threading.Tasks;
     using Configurations;
+    using Framework.Kafka.Consumer;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using MicroTransactions.Commands.Transactions.V1;
 
     internal class Program
     {
@@ -29,19 +31,25 @@
 
             logger.LogCritical("Starting Mts CommandHandler...");
 
-
-            for (int i = 0; i < 5; i++)
+            try
             {
-                logger.LogInformation("Test new log {times}", i);
+                using (var consumer = scopedProvider.GetRequiredService<IConsumer<TransactionCommandV1>>())
+                {
+                    consumer.StartConsuming();
+
+                    Console.CancelKeyPress += (sender, eArgs) =>
+                    {
+                        Program.QuitEvent.Set();
+                        eArgs.Cancel = true;
+                    };
+
+                    Program.QuitEvent.WaitOne();
+                }
             }
-
-            Console.CancelKeyPress += (sender, eArgs) =>
+            catch (Exception exception)
             {
-                Program.QuitEvent.Set();
-                eArgs.Cancel = true;
-            };
-
-            Program.QuitEvent.WaitOne();
+                logger.LogCritical(exception, "Fatal Exception occured.");
+            }
 
             logger.LogCritical("Mts.CommandHandler Ended...");
 

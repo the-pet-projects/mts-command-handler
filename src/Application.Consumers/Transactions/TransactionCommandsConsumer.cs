@@ -19,14 +19,14 @@
         private readonly ISimpleMediator mediator;
         private readonly ILogger<TransactionsCommandsConsumer> logger;
 
-        protected TransactionsCommandsConsumer(ISimpleMediator mediator, ILogger<TransactionsCommandsConsumer> logger, ITopic<Contract.TransactionCommandV1> topic, IConsumerConfiguration configuration)
+        public TransactionsCommandsConsumer(ISimpleMediator mediator, ILogger<TransactionsCommandsConsumer> logger, ITopic<Contract.TransactionCommandV1> topic, IConsumerConfiguration configuration)
             : base(topic, configuration, logger)
         {
             this.mediator = mediator;
             this.logger = logger;
             this.TryReceiveAsync<Contract.CreateTransactionCommand>(async (command) => await this.HandleCreateCommandAsync(command));
 
-            this.StartConsuming();
+            this.logger.LogInformation("Consumer {type} has started...", nameof(TransactionsCommandsConsumer));
         }
 
         private async Task<bool> HandleCreateCommandAsync(Contract.CreateTransactionCommand command)

@@ -23,7 +23,7 @@
                 var pollTimeout = configStore.GetAndConvertValue<int>("kafka/consumer/pollTimeout");
                 var brokers = configStore.GetAndConvertValue<string>("kafka/brokersList").Split(',');
                 var groupId = configStore.GetAndConvertValue<string>("kafka/consumer/consumerGroupId");
-                var clientIdPrefix = configStore.GetAndConvertValue<string>("kafka/consumer/clientIdPrefix");
+                var clientIdPrefix = configStore.GetAndConvertValue<string>("kafka/consumer/clientId");
 
                 return new ConsumerConfiguration(
                         groupId,
@@ -32,8 +32,9 @@
                     .SetPollIntervalInMs(pollTimeout);
             });
 
-            serviceCollection.AddSingleton<ITopic<TransactionCommandV1>, TransactionCommandsTopicV1>();
+            var environment = configStore.GetAndConvertValue<string>("kafka/environment");
 
+            serviceCollection.AddSingleton<ITopic<TransactionCommandV1>>(new TransactionCommandsTopicV1(environment));
             serviceCollection.AddTransient<IConsumer<TransactionCommandV1>, TransactionsCommandsConsumer>();
 
             return serviceCollection;

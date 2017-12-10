@@ -1,12 +1,10 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Presentation.ConsoleApplication.Configurations
 {
     using System.IO;
-
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Logging.Abstractions;
-
     using PetProjects.Framework.Consul;
     using PetProjects.Framework.Consul.Store;
     using PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection;
@@ -36,11 +34,11 @@
                 configStore = tmpServiceProvider.GetRequiredService<IStringKeyValueStore>();
             }
 
+            this.ServiceCollection.LoadLoggingConfiguration(configStore);
+            this.ServiceCollection.LoadRepositoriesConfigurations();
+            this.ServiceCollection.LoadCommandHandlersConfigurations();
             this.ServiceCollection.LoadConsumersConfigurations(configStore);
             this.ServiceCollection.LoadProducersConfigurations(configStore);
-            this.ServiceCollection.LoadLoggingConfiguration(configStore);
-            this.ServiceCollection.LoadCommandHandlersConfigurations();
-            this.ServiceCollection.LoadRepositoriesConfigurations();
 
             return this;
         }

@@ -30,7 +30,7 @@
             var logLevel = configStore.GetAndConvertValue<LogEventLevel>("logging/logLevel");
             var logType = configStore.GetAndConvertValue<string>("logging/logType");
 
-            serviceCollection.AddLogging(builder => builder.AddPetProjectLogging(logLevel, sinkConfig, kafkaConfig, logType, true));
+            serviceCollection.AddLogging(builder => builder.AddPetProjectLogging(logLevel, sinkConfig, kafkaConfig, logType, true).AddConsole());
             serviceCollection.TryAddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("No category"));
 
             return serviceCollection;
