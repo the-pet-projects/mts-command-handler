@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  microtransactionsmgtapi:
+  microtransactionscommandhandler:
     container_name: microtransactionscommandhandler
     image: petprojects/micro-transactions-command-handler:${BUILD_VERSION}
     network_mode: bridge
