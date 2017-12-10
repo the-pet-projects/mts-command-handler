@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb</AssemblyName>
+    <RootNamespace>PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CassandraCSharpDriver" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Model\Domain.Model.csproj" />
+    <ProjectReference Include="..\Infrasctructure.CrossCutting\Infrasctructure.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>

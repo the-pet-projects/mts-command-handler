@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  microtransactionscommandhandler:
+    container_name: microtransactionscommandhandler
+    image: petprojects/micro-transactions-command-handler:dev
+    build:
+      context: ./src/Mts.CommandHandler
+      dockerfile: Dockerfile
+      args:
+        source: ./build

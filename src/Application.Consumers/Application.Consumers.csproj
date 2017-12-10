@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>PetProjects.Mts.CommandHandler.Application.Consumers</AssemblyName>
+    <RootNamespace>PetProjects.Mts.CommandHandler.Application.Consumers</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PetProjects.Framework.Cqrs" Version="1.0.17337.3" />
+    <PackageReference Include="PetProjects.Framework.Kafka" Version="0.1.17344.2" />
+    <PackageReference Include="PetProjects.MicroTransactions.Commands" Version="0.1.17344.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Application.CommandHandlers\Application.CommandHandlers.csproj" />
+    <ProjectReference Include="..\Infrasctructure.CrossCutting\Infrasctructure.CrossCutting.csproj" />
+  </ItemGroup>
+
+</Project>
