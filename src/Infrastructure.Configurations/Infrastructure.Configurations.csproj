@@ -13,8 +13,8 @@
     <PackageReference Include="PetProjects.Framework.Consul" Version="0.9.17330.3" />
     <PackageReference Include="PetProjects.Framework.Cqrs" Version="1.0.17337.3" />
     <PackageReference Include="PetProjects.Framework.Cqrs.Extensions.AspNetCore" Version="1.0.17337.3" />
-    <PackageReference Include="PetProjects.Framework.Logging.Contracts" Version="0.9.17343.4" />
-    <PackageReference Include="PetProjects.Framework.Logging.Producer" Version="0.9.17343.4" />
+    <PackageReference Include="PetProjects.Framework.Logging.Contracts" Version="0.9.17344.4" />
+    <PackageReference Include="PetProjects.Framework.Logging.Producer" Version="0.9.17344.4" />
     <PackageReference Include="PetProjects.MicroTransactions.Commands" Version="0.1.17344.2" />
     <PackageReference Include="PetProjects.MicroTransactions.Events" Version="0.1.17344.2" />
   </ItemGroup>

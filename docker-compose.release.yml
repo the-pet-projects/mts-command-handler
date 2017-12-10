@@ -9,7 +9,7 @@ services:
        - 'MTS_APP_SETTINGS_ConsulStoreConfiguration:Environment=${CONSUL_ENVIRONMENT}'
        - 'MTS_APP_SETTINGS_ConsulClientConfiguration:Address=${CONSUL_ADDRESS}'
     build:
-      context: ./src/Mts.CommandHandler
+      context: ./src/Presentation.ConsoleApplication
       dockerfile: Dockerfile
       args:
         source: ${OUTPUT_PATH}
