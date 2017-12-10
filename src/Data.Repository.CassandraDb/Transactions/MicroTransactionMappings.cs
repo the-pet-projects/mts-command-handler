@@ -11,6 +11,7 @@
             this.For<MicroTransaction>()
                 .TableName("transactions")
                 .PartitionKey(t => t.UserId)
+                .ClusteringKey("transaction_id", "item_id")
                 .Column(t => t.Id, cfg => cfg.WithName("transaction_id"))
                 .Column(t => t.UserId, cfg => cfg.WithName("user_id"))
                 .Column(t => t.Timestamp, cfg => cfg.WithName("timestamp"))

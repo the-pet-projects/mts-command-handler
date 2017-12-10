@@ -7,14 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <None Remove="appsettings.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CassandraDb\" />
-    <Folder Include="Producer\" />
+    <EmbeddedResource Include="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="4.19.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="CassandraCSharpDriver" Version="3.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="PetProjects.Framework.Consul" Version="0.9.17330.3" />
+    <PackageReference Include="PetProjects.Framework.Kafka" Version="0.1.17344.2" />
+    <PackageReference Include="PetProjects.MicroTransactions.Commands" Version="0.1.17344.2" />
+    <PackageReference Include="PetProjects.MicroTransactions.Events" Version="0.1.17344.2" />
   </ItemGroup>
 
 </Project>

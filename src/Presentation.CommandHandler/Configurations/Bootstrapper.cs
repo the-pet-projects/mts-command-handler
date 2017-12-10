@@ -35,6 +35,7 @@
             }
 
             this.ServiceCollection.LoadLoggingConfiguration(configStore);
+            this.ServiceCollection.LoadCassandraConfigurations(configStore);
             this.ServiceCollection.LoadRepositoriesConfigurations();
             this.ServiceCollection.LoadCommandHandlersConfigurations();
             this.ServiceCollection.LoadConsumersConfigurations(configStore);

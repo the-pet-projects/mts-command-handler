@@ -16,9 +16,9 @@
     {
         private readonly ITransactionsRepository transactionsRepository;
         private readonly IProducer<TransactionEventV1> producer;
-        private readonly ILogger logger;
+        private readonly ILogger<CreateTransactionCommandHandlerAsync> logger;
 
-        public CreateTransactionCommandHandlerAsync(ITransactionsRepository transactionsRepository, IProducer<TransactionEventV1> producer, ILogger logger)
+        public CreateTransactionCommandHandlerAsync(ITransactionsRepository transactionsRepository, IProducer<TransactionEventV1> producer, ILogger<CreateTransactionCommandHandlerAsync> logger)
         {
             this.transactionsRepository = transactionsRepository;
             this.producer = producer;
@@ -27,16 +27,24 @@
 
         public async Task<CommandResult<MicroTransaction>> HandleAsync(CreateTransactionCommand command)
         {
-            this.logger.LogTrace("Entered {commandHandler} with command values: {command}", nameof(CreateTransactionCommandHandlerAsync), command);
-            var result = await this.transactionsRepository.InsertAsync(new MicroTransaction());
+            this.logger.LogTrace("Entered {commandHandler}", nameof(CreateTransactionCommandHandlerAsync));
 
-            this.logger.LogTrace("After Insert Action {commandHandler} result was: {result}", nameof(CreateTransactionCommandHandlerAsync), result);
+            var result = await this.transactionsRepository.InsertAsync(new MicroTransaction
+            {
+                UserId = command.UserId,
+                Quantity = command.Quantity,
+                ItemId = command.ItemId,
+                Timestamp = command.Timestamp,
+                Id = command.TransactionId
+            });
+
             if (!result.Success)
             {
+                this.logger.LogTrace("Left {commandHandler} with Success: {result}", nameof(CreateTransactionCommandHandlerAsync), result.Success);
                 return result;
             }
 
-            this.logger.LogTrace("Before Producing {event}: {values}", nameof(TransactionCreatedEvent), result.Data);
+            this.logger.LogTrace("Before Producing {eventType}", nameof(TransactionCreatedEvent));
 
             var report = await this.producer.ProduceAsync(
                 new TransactionCreatedEvent
@@ -48,14 +56,14 @@
                     Timestamp = new Timestamp()
                 });
 
-            if (!report.Error.HasError)
+            this.logger.LogTrace("After Producing {eventType}", nameof(TransactionCreatedEvent));
+
+            if (report.Error.HasError)
             {
-                this.logger.LogWarning("Error Producing {event}. Error: {error}", nameof(TransactionCreatedEvent), report.Error);
+                this.logger.LogWarning("Error Producing {event}. Error: {error}", nameof(TransactionCreatedEvent), new { Error = report.Error });
             }
 
-            this.logger.LogTrace("Produced {event} with {report}", nameof(TransactionCreatedEvent), report);
-
-
+            this.logger.LogTrace("Left {commandHandler} with Success: {result}", nameof(CreateTransactionCommandHandlerAsync), result.Success);
             return result;
         }
     }

@@ -1,18 +1,18 @@
 ﻿namespace PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting.Error
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     public class CommandResult<TData> : IResult<TData>
     {
         public CommandResult(TData data)
         {
             this.Data = data;
+            this.Success = true;
         }
 
         public TData Data { get; }
 
-        public bool Success => this.Errors.Any();
+        public bool Success { get; set; }
 
         public ICollection<Error> Errors { get; } = new List<Error>();
 

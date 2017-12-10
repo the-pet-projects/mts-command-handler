@@ -22,19 +22,19 @@ namespace PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Transaction
             this.settings = settings;
         }
 
-        public Task<CommandResult<MicroTransaction>> InsertAsync(MicroTransaction transaction)
+        public async Task<CommandResult<MicroTransaction>> InsertAsync(MicroTransaction transaction)
         {
             var result = new CommandResult<MicroTransaction>(transaction);
 
             try
             {
-                this.connection.Mapper.InsertAsync(
+                await this.connection.Mapper.InsertAsync(
                     transaction,
                     false,
                     null,
                     CqlQueryOptions.New().SetConsistencyLevel(this.settings.TransactionsWriteConsistencyLevel));
 
-                return Task.FromResult(result);
+                return result;
             }
             catch (Exception exception)
             {
@@ -48,7 +48,7 @@ namespace PetProjects.Mts.CommandHandler.Data.Repository.CassandraDb.Transaction
                     }
                 });
 
-                return Task.FromResult(result);
+                return result;
             }
         }
     }

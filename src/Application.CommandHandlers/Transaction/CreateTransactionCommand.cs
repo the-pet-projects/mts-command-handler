@@ -8,15 +8,11 @@
 
     public class CreateTransactionCommand : ICommand<CommandResult<MicroTransaction>>
     {
-        public CreateTransactionCommand()
-        {
-        }
-
         public Guid UserId { get; set; }
 
         public Guid ItemId { get; set; }
 
-        public float Quantity { get; set; }
+        public int Quantity { get; set; }
 
         public Guid TransactionId { get; set; }
 

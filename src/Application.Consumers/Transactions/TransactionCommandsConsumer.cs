@@ -14,7 +14,7 @@
 
     using Contract = PetProjects.MicroTransactions.Commands.Transactions.V1;
 
-    public class TransactionsCommandsConsumer: Consumer<Contract.TransactionCommandV1>
+    public class TransactionsCommandsConsumer : Consumer<Contract.TransactionCommandV1>
     {
         private readonly ISimpleMediator mediator;
         private readonly ILogger<TransactionsCommandsConsumer> logger;
@@ -24,9 +24,9 @@
         {
             this.mediator = mediator;
             this.logger = logger;
-            this.TryReceiveAsync<Contract.CreateTransactionCommand>(async (command) => await this.HandleCreateCommandAsync(command));
+            this.TryReceiveAsync<Contract.CreateTransactionCommand>(async command => await this.HandleCreateCommandAsync(command));
 
-            this.logger.LogInformation("Consumer {type} has started...", nameof(TransactionsCommandsConsumer));
+            this.logger.LogTrace("Consumer {type} has started...", nameof(TransactionsCommandsConsumer));
         }
 
         private async Task<bool> HandleCreateCommandAsync(Contract.CreateTransactionCommand command)
