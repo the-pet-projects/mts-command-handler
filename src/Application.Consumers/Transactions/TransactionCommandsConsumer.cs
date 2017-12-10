@@ -26,7 +26,7 @@
             this.logger = logger;
             this.TryReceiveAsync<Contract.CreateTransactionCommand>(async command => await this.HandleCreateCommandAsync(command));
 
-            this.logger.LogTrace("Consumer {type} has started...", nameof(TransactionsCommandsConsumer));
+            this.logger.LogTrace("Consumer {type} has started...", typeof(TransactionsCommandsConsumer).FullName);
         }
 
         private async Task<bool> HandleCreateCommandAsync(Contract.CreateTransactionCommand command)

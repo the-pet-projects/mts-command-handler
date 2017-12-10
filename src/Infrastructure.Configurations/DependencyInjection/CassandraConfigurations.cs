@@ -12,8 +12,7 @@
 
     public static class CassandraConfigurations
     {
-        public static IServiceCollection LoadCassandraConfigurations(this IServiceCollection serviceCollection,
-            IStringKeyValueStore configStore)
+        public static IServiceCollection LoadCassandraConfigurations(this IServiceCollection serviceCollection, IStringKeyValueStore configStore)
         {
             serviceCollection.AddTransient<CassandraSettings>(serviceProvider => new CassandraSettings
             {
