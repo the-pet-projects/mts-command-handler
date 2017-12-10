@@ -8,38 +8,44 @@
     using PetProjects.Framework.Kafka.Configurations.Consumer;
     using PetProjects.Framework.Kafka.Consumer;
     using PetProjects.Framework.Kafka.Contracts.Topics;
-    using PetProjects.MicroTransactions.Commands.Transactions.V1;
     using PetProjects.Mts.CommandHandler.Application.CommandHandlers.Transaction;
     using PetProjects.Mts.CommandHandler.Domain.Model;
     using PetProjects.Mts.CommandHandler.Infrasctructure.CrossCutting.Error;
 
-    public class TransactionsCommandsConsumer: Consumer<TransactionCommand>
+    using Contract = PetProjects.MicroTransactions.Commands.Transactions.V1;
+
+    public class TransactionsCommandsConsumer: Consumer<Contract.TransactionCommandV1>
     {
         private readonly ISimpleMediator mediator;
         private readonly ILogger<TransactionsCommandsConsumer> logger;
 
-        protected TransactionsCommandsConsumer(ISimpleMediator mediator, ILogger<TransactionsCommandsConsumer> logger, ITopic<TransactionCommand> topic, IConsumerConfiguration configuration)
+        protected TransactionsCommandsConsumer(ISimpleMediator mediator, ILogger<TransactionsCommandsConsumer> logger, ITopic<Contract.TransactionCommandV1> topic, IConsumerConfiguration configuration)
             : base(topic, configuration, logger)
         {
             this.mediator = mediator;
             this.logger = logger;
-            this.Receive<CreateTransaction>(async message => await this.HandleCreateCommand(message));
+            this.TryReceiveAsync<Contract.CreateTransactionCommand>(async (command) => await this.HandleCreateCommandAsync(command));
 
             this.StartConsuming();
         }
 
-        private async Task HandleCreateCommand(CreateTransaction cmd)
+        private async Task<bool> HandleCreateCommandAsync(Contract.CreateTransactionCommand command)
         {
-            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>(new CreateTransactionCommand());
+            var result = await this.mediator.RunCommandAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>(new CreateTransactionCommand
+            {
+                UserId = command.UserId,
+                Quantity = command.Quantity,
+                ItemId = command.ItemId,
+                Timestamp = command.Timestamp.UnixTimeEpochTimestamp,
+                TransactionId = command.TransactionId
+            });
 
-            if (result.Success)
+            if (!result.Success)
             {
-                await this.CommitAsync();
+                this.logger.LogWarning("Command {command} was unsuccessful. Result: {result}", command, result);
             }
-            else
-            {
-                this.logger.LogError("Error Handling Create Command. Message was not committed. Result {result}", result);
-            }
+
+            return result.Success;
         }
     }
 }

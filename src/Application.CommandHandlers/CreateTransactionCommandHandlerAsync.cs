@@ -15,10 +15,10 @@
     public class CreateTransactionCommandHandlerAsync : ICommandHandlerWithResponseAsync<CreateTransactionCommand, CommandResult<MicroTransaction>>
     {
         private readonly ITransactionsRepository transactionsRepository;
-        private readonly IProducer<TransactionEvent> producer;
+        private readonly IProducer<TransactionEventV1> producer;
         private readonly ILogger logger;
 
-        public CreateTransactionCommandHandlerAsync(ITransactionsRepository transactionsRepository, IProducer<TransactionEvent> producer, ILogger logger)
+        public CreateTransactionCommandHandlerAsync(ITransactionsRepository transactionsRepository, IProducer<TransactionEventV1> producer, ILogger logger)
         {
             this.transactionsRepository = transactionsRepository;
             this.producer = producer;
@@ -36,22 +36,24 @@
                 return result;
             }
 
-            this.logger.LogTrace("Before Producing {event}: {values}", nameof(TransactionCreated), result.Data);
+            this.logger.LogTrace("Before Producing {event}: {values}", nameof(TransactionCreatedEvent), result.Data);
 
             var report = await this.producer.ProduceAsync(
-                new TransactionCreated(
-                    result.Data.Id,
-                    result.Data.ItemId,
-                    result.Data.Quantity,
-                    result.Data.UserId,
-                    new Timestamp()));
+                new TransactionCreatedEvent
+                {
+                    TransactionId = result.Data.Id,
+                    UserId = result.Data.UserId,
+                    ItemId = result.Data.ItemId,
+                    Quantity = result.Data.Quantity,
+                    Timestamp = new Timestamp()
+                });
 
             if (!report.Error.HasError)
             {
-                this.logger.LogWarning("Error Producing {event}. Error: {error}", nameof(TransactionCreated), report.Error);
+                this.logger.LogWarning("Error Producing {event}. Error: {error}", nameof(TransactionCreatedEvent), report.Error);
             }
 
-            this.logger.LogTrace("Produced {event} with {report}", nameof(TransactionCreated), report);
+            this.logger.LogTrace("Produced {event} with {report}", nameof(TransactionCreatedEvent), report);
 
 
             return result;

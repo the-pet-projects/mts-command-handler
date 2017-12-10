@@ -32,9 +32,9 @@
                     .SetPollIntervalInMs(pollTimeout);
             });
 
-            serviceCollection.AddSingleton<ITopic<TransactionCommand>, TransactionCommandsTopic>();
+            serviceCollection.AddSingleton<ITopic<TransactionCommandV1>, TransactionCommandsTopicV1>();
 
-            serviceCollection.AddTransient<IConsumer<TransactionCommand>, TransactionsCommandsConsumer>();
+            serviceCollection.AddTransient<IConsumer<TransactionCommandV1>, TransactionsCommandsConsumer>();
 
             return serviceCollection;
         }
@@ -43,10 +43,11 @@
         {
             var brokers = configStore.GetAndConvertValue<string>("kafka/brokersList").Split(',');
             var clientId = configStore.GetAndConvertValue<string>("kafka/producer/clientId");
+            var environment = configStore.GetAndConvertValue<string>("kafka/environment");
 
             var producerConfiguration = new ProducerConfiguration(clientId, brokers);
 
-            serviceCollection.AddSingleton<IProducer<TransactionEvent>>(new Producer<TransactionEvent>(new TransactionEventsTopic(), producerConfiguration));
+            serviceCollection.AddSingleton<IProducer<TransactionEventV1>>(new Producer<TransactionEventV1>(new TransactionEventsTopicV1(environment), producerConfiguration));
 
             return serviceCollection;
         }
