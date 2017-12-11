@@ -19,9 +19,12 @@
             var configuration = new Bootstrapper()
                                     .BootstrapContainer();
 
-            using (var parentServiceProvider = configuration.ServiceCollection.BuildServiceProvider())
+            using (var rootProvider = configuration.ServiceCollection.BuildServiceProvider())
             {
-                Program.Run(parentServiceProvider);
+                using (var scopedProvider = rootProvider.CreateScope())
+                {
+                    Program.Run(scopedProvider.ServiceProvider);
+                }
             }
         }
 

@@ -3,8 +3,8 @@
     using System.IO;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Logging.Abstractions;
     using PetProjects.Framework.Consul;
     using PetProjects.Framework.Consul.Store;
     using PetProjects.Mts.CommandHandler.Infrastructure.Configurations.DependencyInjection;
@@ -22,18 +22,11 @@
 
         public Bootstrapper BootstrapContainer()
         {
+            var configStore = GetConfigurationKeyValueStore(this.Configuration);
+
             this.ServiceCollection = new ServiceCollection();
 
             this.ServiceCollection.AddPetProjectConsulServices(this.Configuration, true);
-            this.ServiceCollection.AddSingleton<ILogger>(NullLogger.Instance);
-
-            IStringKeyValueStore configStore;
-
-            using (var tmpServiceProvider = this.ServiceCollection.BuildServiceProvider())
-            {
-                configStore = tmpServiceProvider.GetRequiredService<IStringKeyValueStore>();
-            }
-
             this.ServiceCollection.LoadLoggingConfiguration(configStore);
             this.ServiceCollection.LoadCassandraConfigurations(configStore);
             this.ServiceCollection.LoadRepositoriesConfigurations();
@@ -42,6 +35,22 @@
             this.ServiceCollection.LoadProducersConfigurations(configStore);
 
             return this;
+        }
+
+        private static IStringKeyValueStore GetConfigurationKeyValueStore(IConfiguration configuration)
+        {
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddPetProjectConsulServices(configuration, true);
+            serviceCollection.AddLogging(builder => builder.AddConsole());
+            serviceCollection.TryAddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger("No category"));
+
+            using (var tempProvider = serviceCollection.BuildServiceProvider())
+            {
+                using (var scopedProvider = tempProvider.CreateScope())
+                {
+                    return scopedProvider.ServiceProvider.GetRequiredService<IStringKeyValueStore>();
+                }
+            }
         }
 
         private void SetupConfiguration()
