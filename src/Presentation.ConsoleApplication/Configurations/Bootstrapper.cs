@@ -58,7 +58,7 @@
             var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("Configurations/appsettings.json", optional: false, reloadOnChange: false)
-                .AddEnvironmentVariables("MTS_APP_SETTINGS");
+                .AddEnvironmentVariables("MTS_APP_SETTINGS_");
 
             this.Configuration = configurationBuilder.Build();
         }
